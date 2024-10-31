@@ -96,6 +96,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useActividadesStore } from '../stores/stores'
 import { useQuasar } from 'quasar'
+import Swal from 'sweetalert2';
 
 const $q = useQuasar()
 const router = useRouter()
@@ -115,9 +116,9 @@ const estadoOptions = ['Completado', 'Pendiente', 'En Progreso', 'Cancelado']
 const getStatusColor = (estado) => {
   const statusColors = {
     'Pendiente': 'orange',
-    'En Progreso': 'blue',
-    'Completado': 'green',
-    'Cancelado': 'red'
+    
+    'Completado': 'red',
+    
   }
   return statusColors[estado] || 'grey'
 }
@@ -141,6 +142,25 @@ onMounted(() => {
   }
 })
 
+onMounted(() => {
+  const actividad = store.obtenerActividad(actividadId)
+  
+  if (actividad) {
+    formData.value = {
+      actividad: actividad.actividad,
+      fecha: actividad.fecha,
+      estado: actividad.estado
+    }
+  } else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Actividad no encontrada',
+      position: 'top'
+    })
+    router.push('/')
+  }
+})
+
 const onSubmit = () => {
   try {
     store.editarActividad(actividadId, {
@@ -148,17 +168,17 @@ const onSubmit = () => {
       id: actividadId
     })
     
-    $q.notify({
-      type: 'positive',
-      message: 'Actividad actualizada exitosamente',
-      position: 'top'
+    Swal.fire({
+      icon: 'success',
+      title: 'Actividad actualizada exitosamente',
+      position: 'left'
     })
     
     router.push('/')
   } catch (error) {
-    $q.notify({
-      type: 'negative',
-      message: 'Error al actualizar la actividad',
+    Swal.fire({
+      icon: 'error',
+      title: 'Error al actualizar la actividad',
       position: 'top'
     })
     console.error('Error al actualizar actividad:', error)
@@ -271,7 +291,11 @@ const onSubmit = () => {
   padding: 20px;
 }
 
-
+.q-btn-group[data-v-0f27c6f9] {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+}
 
 
 

@@ -42,7 +42,7 @@ watch(() => route.path, scrollToTop, { immediate: true })
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #0a0a0a;
+
 }
 
 .header {
@@ -51,12 +51,13 @@ watch(() => route.path, scrollToTop, { immediate: true })
   left: 0;
   right: 0;
   z-index: 1000;
+ border: 20px solid red;  
  
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 10px 30px;
-  box-shadow: 0 2px 15px rgba(255, 215, 0, 0.1);
+ 
 }
 
 .logo-container {

@@ -29,6 +29,10 @@ export const useActividadesStore = defineStore('actividades', () => {
       actividades.value.splice(index, 1)
     }
   }
+
+  const eliminarTodasActividades = () => {
+    actividades.value = []
+  }
   
   const obtenerActividad = (id) => {
     return actividades.value.find(act => act.id === id)
@@ -39,6 +43,7 @@ export const useActividadesStore = defineStore('actividades', () => {
     agregarActividad,
     editarActividad,
     eliminarActividad,
+    eliminarTodasActividades,
     obtenerActividad
   }
 }, {
